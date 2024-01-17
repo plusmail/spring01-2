@@ -10,4 +10,8 @@
     <typeAliases>
         <package name="com.yi.spring.vo"/>
     </typeAliases>
+    <mappers>
+<!--        <mapper resource="/mappers/MemberMapper.xml"/>-->
+        <package name="com.yi.spring.mappers"/>
+    </mappers>
 </configuration>

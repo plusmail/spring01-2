@@ -1,0 +1,4 @@
+<!-- 해당 패키지의 로그 레벨을 "OFF"로 설정 -->
+<logger name="org.springframework.web.servlet.view.InternalResourceView">
+    <level value="OFF" />
+</logger>

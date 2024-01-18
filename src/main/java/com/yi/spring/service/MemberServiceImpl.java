@@ -16,8 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
 
-//    @Autowired
-//    private MemberMapper memberMapper;
+    @Autowired
+    private MemberMapper memberMapper;
 
     @Autowired
     private SqlSession sqlsession;
@@ -25,15 +25,15 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public List<MemberVO> listMembers() {
         List<MemberVO> membersList = null;
-        membersList = sqlsession.selectList(namespace+"listMembers");
-//        membersList = memberMapper.listMembers();
+//        membersList = sqlsession.selectList(namespace+"listMembers");
+        membersList = memberMapper.listMembers();
         return membersList;
     }
 
     @Override
     public void userAdd(MemberVO vo) throws Exception{
         System.out.println("service->"+ vo);
-        sqlsession.insert(namespace + "userAdd", vo);
-//        memberMapper.userAdd(vo);
+//        sqlsession.insert(namespace + "userAdd", vo);
+        memberMapper.userAdd(vo);
     }
 }

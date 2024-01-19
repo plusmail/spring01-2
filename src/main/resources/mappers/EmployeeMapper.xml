@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yi.spring.mappers.EmployeeMapper">
+
+    <select id="listEmployees" resultMap="employeeResult">
+        select  empCode, empName, empTitle,
+                empAuth, empSalary, empTel, empId, empPwd, d.deptName, d.deptNo
+        from employee e
+                 left join department d on e.deptNo = d.deptNo
+        order by empCode
+    </select>
+
+    <resultMap id="employeeResult" type="com.yi.spring.vo.EmployeeVO">
+        <id property="empCode" column="empCode"/>
+        <result property="empName" column="empName"/>
+        <result property="empTitle" column="empTitle"/>
+        <result property="empAuth" column="empAuth"/>
+        <result property="empSalary" column="empSalary"/>
+        <result property="empTel" column="empTel"/>
+        <result property="empId" column="empId"/>
+        <result property="empPwd" column="empPwd"/>
+        <association property="dept" javaType="com.yi.spring.vo.DepartmentVO">
+            <id property="deptNo" column="deptNo"/>
+            <result property="deptName" column="deptName"/>
+        </association>
+    </resultMap>
+
+</mapper>
+

@@ -7,11 +7,7 @@
         select * from member
     </select>
 
-<!--    <select id="listMembers2" resultMap="memberResult">-->
-<!--        select * from member where userId=""-->
-<!--    </select>-->
-
-    <resultMap type="com.yi.spring.vo.MemberVO" id="memberResult">
+    <resultMap type="MemberVO" id="memberResult">
         <id property="userNo" column="userNo"/>
         <result property="userId" column="userId"/>
         <result property="userName" column="userName"/>

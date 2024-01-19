@@ -4,14 +4,34 @@
 
 <configuration>
     <settings>
-        <setting name="mapUnderscoreToCamelCase" value="true" />
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
-    <!-- 타입의 alias 등록 -->
     <typeAliases>
+        <typeAlias type="com.yi.spring.mappers.MemberMapper" alias="Mappers"/>
         <package name="com.yi.spring.vo"/>
     </typeAliases>
+    <!-- 개발 환경 -->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/> <!-- el아님, 띄어쓰기x -->
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
     <mappers>
-<!--        <mapper resource="/mappers/MemberMapper.xml"/>-->
+        <!-- 클래스패스의 상대경로의 리소스 사용 -->
+<!--        <mapper resource="classpath:/mappers/*.Mapper.xml"/>-->
+<!--        &lt;!&ndash; 절대경로의 url을 사용 &ndash;&gt;-->
+<!--        <mapper url="~/IdeaProjects/spring"/>-->
+<!--        &lt;!&ndash; 매퍼 인터페이스를 사용 &ndash;&gt;-->
+<!--        <mapper class="com.yi.spring.mappers"/>-->
+<!--        &lt;!&ndash; 매퍼로 패키지내 모든 인터페이스를 등록 &ndash;&gt;-->
         <package name="com.yi.spring.mappers"/>
     </mappers>
+
 </configuration>

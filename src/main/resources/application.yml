@@ -21,3 +21,4 @@ spring:
         idle-timeout: 28000
         connection-timeout: 0
         transaction-isolation: TRANSACTION_READ_UNCOMMITTED
+

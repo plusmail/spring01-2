@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,31 +20,36 @@ public class AccountServiceImpl implements AccountService {
     AccountMapper accountMapper;
 
 
-    @Transactional(rollbackFor = InsufficientBalanceException.class)
+    @Transactional(rollbackFor = UnexpectedRollbackException.class)
     @Override
-    public void sendMoney() throws InsufficientBalanceException {
+    public void sendMoney() {
 
+        try{
             accountMapper.updateBalance1();
             if(getBalance("70-490-911") < 0){
-                throw new InsufficientBalanceException("잔액이 부족합니다.");
+                throw new UnexpectedRollbackException("잔액이 부족합니다.");
             }
             accountMapper.updateBalance2();
+        }catch (UnexpectedRollbackException e){
+            handleInsufficientBalanceException(e);
+        }
     }
-
-    @ExceptionHandler(value=InsufficientBalanceException.class)
-    public ResponseEntity<ErrorResponse> handleInsufficientBalanceException(InsufficientBalanceException e) {
-        // 예외 처리 코드
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setCode("USER_NOT_FOUND");
-        errorResponse.setMessage("사용자를 찾을 수 없습니다.");
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-    }
-
-
     @Override
     public double getBalance(String accountNumber) {
         return accountMapper.getBalance(accountNumber);
     }
+
+    @ExceptionHandler(UnexpectedRollbackException.class)
+    @Override
+    public ResponseEntity<ErrorResponse> handleInsufficientBalanceException(UnexpectedRollbackException e) {
+        System.out.println("233333333333333333333");
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setCode("UNEXPECTED_ROLLBACK");
+        errorResponse.setMessage("예기치 않은 롤백이 발생했습니다.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+
+
+
 
 }

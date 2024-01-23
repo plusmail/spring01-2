@@ -26,6 +26,7 @@
     <context:component-scan base-package="com.yi.spring.mappers"/>
     <context:component-scan base-package="com.yi.spring.vo"/>
     <context:component-scan base-package="com.yi.spring.service"/>
+    <context:component-scan base-package="com.yi.spring.handler"/>
 <!--    <aop:aspectj-autoproxy/>-->
 
 </beans:beans>

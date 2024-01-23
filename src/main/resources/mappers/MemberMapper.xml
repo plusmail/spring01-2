@@ -7,7 +7,11 @@
         select * from member
     </select>
 
-    <resultMap type="MemberVO" id="memberResult">
+    <select id="listMembers2" resultMap="memberResult">
+        select * from member where userId=""
+    </select>
+
+    <resultMap type="com.yi.spring.vo.MemberVO" id="memberResult">
         <id property="userNo" column="userNo"/>
         <result property="userId" column="userId"/>
         <result property="userName" column="userName"/>
@@ -16,7 +20,7 @@
 
     <insert id="userAdd" parameterType="com.yi.spring.vo.MemberVO">
         insert into member(userId, userName, userPassword)
-        values(#{vo.userId}, #{vo.userName} , #{vo.userPassword})
+        values(#{userId}, #{userName} , #{userPassword})
     </insert>
 
 </mapper>

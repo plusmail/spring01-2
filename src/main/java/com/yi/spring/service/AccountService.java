@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 public interface AccountService {
 
-    void sendMoney() throws UnexpectedRollbackException;
+    void sendMoney() throws InsufficientBalanceException;
     double getBalance(String accountNumber);
 
-    @ExceptionHandler(value=UnexpectedRollbackException.class)
-    ResponseEntity<ErrorResponse> handleInsufficientBalanceException(UnexpectedRollbackException e);
+//    @ExceptionHandler(value=UnexpectedRollbackException.class)
+//    ResponseEntity<ErrorResponse> handleInsufficientBalanceException(UnexpectedRollbackException e);
 
 }

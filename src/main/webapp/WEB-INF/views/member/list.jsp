@@ -5,16 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-<table>
-    <c:forEach var="item" items="${list}">
-        <tr>
-            <td>${item.userNo}</td>
-            <td>${item.userId}</td>
-            <td>${item.userName}</td>
-            <td>${item.userPassword}</td>
-        </tr>
-    </c:forEach>
 
-</table>
+<c:forEach var="item" items="${list}">
+    <tr>
+        <td>${item.userNo}</td>
+        <td>${item.userId}</td>
+        <td>${item.userName}</td>
+        <td>${item.userPassword}</td>
+    </tr>
+</c:forEach>
 </body>
 </html>

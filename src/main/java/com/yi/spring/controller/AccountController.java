@@ -1,31 +1,34 @@
 package com.yi.spring.controller;
 
-import com.yi.spring.exception.ErrorResponse;
 import com.yi.spring.exception.InsufficientBalanceException;
 import com.yi.spring.service.AccountService;
+import com.yi.spring.service.UserService;
+import com.yi.spring.vo.User;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Setter
 @Controller
 @ComponentScan
-@RestController
+@ControllerAdvice
 @RequestMapping("/account/*")
 public class AccountController {
 
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(){
 
         return "/account/index";
     }
@@ -33,28 +36,12 @@ public class AccountController {
     @GetMapping("/balance")
     @Transactional
     @ResponseBody
-    public ResponseEntity<ErrorResponse> sendMoney(Model model) {
+    public void sendMoney(Model model) throws InsufficientBalanceException {
 
-        try{
+//        User user = userService.findUserById(1L);
             accountService.sendMoney();
-            ErrorResponse errorResponse = new ErrorResponse();
-            errorResponse.setCode("11111");
-            errorResponse.setMessage("송금성공");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
 
-        }catch (UnexpectedRollbackException e){
-            System.out.println("2222222222222222222222");
-            e.printStackTrace();
-            return accountService.handleInsufficientBalanceException(e);
-        }
-
+            return;
     }
 
-
 }
-
-
-//{
-//        "code": "001",
-//        "message": "잔액이 부족합ㄴ."
-//}

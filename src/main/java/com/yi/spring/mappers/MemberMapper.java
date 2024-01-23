@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface MemberMapper {
-    public List<MemberVO> listMembers();
 
-    public void userAdd(@Param("vo") MemberVO vo);
+    public List<MemberVO> listMembers();
+    public void  userAdd(@Param("vo") MemberVO vo);
 }
